@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### ignore env files ###
-container/**/*.env
+#container/**/*.env
 
 ### ignore postgres data ###
 container/**/postgres_data
