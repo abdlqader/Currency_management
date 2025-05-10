@@ -33,8 +33,8 @@ This is a technical task project developed for **Sanad**.
 > **Note**: The project requires **Linux OS** to run.
 
 1. Make sure you are in the **root directory** of the project.
-2. You **must** place your **personal APP_ID** in the following file:
-   **container/local/.env**
+2. You **must** place your **personal OPENEXCHANGERATES_APP_ID** in the following file:
+   **container/local/.env** for open exchange rates integration to work.
 3. Run the following command in your terminal:
 
 ```bash
