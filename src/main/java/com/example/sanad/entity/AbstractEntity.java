@@ -20,7 +20,6 @@ public class AbstractEntity <T extends AbstractEntity<T>> {
     // This class can be used as a base class for other entities
     @Id
     @GeneratedValue
-    @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     protected UUID id;
     @Column(name = "created_at", nullable = false, updatable = false)

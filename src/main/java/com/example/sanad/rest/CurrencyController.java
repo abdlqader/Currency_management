@@ -36,7 +36,7 @@ public class CurrencyController {
     public ResponseEntity<PaginatedResponse<List<CurrencyDTO>>> getAllCurrencies(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
-            @RequestParam(value = "sort", defaultValue = "name,asc") String sort,
+            @RequestParam(value = "sort", defaultValue = "name") String sort,
             @RequestParam(value = "searchQuery", required = false) String searchQuery
     ) {
         PageRequest pageable = PageRequest.of(page, size, Sort.by(sort));

@@ -65,7 +65,7 @@ public class CurrencyControllerTest {
 
     @BeforeEach
     void setup() {
-        currency = new Currency(CurrencyEnum.AED,"United Arab Emirates Dirham", Collections.emptyList(), Collections.emptyList());
+        currency = new Currency(CurrencyEnum.AED,"United Arab Emirates Dirham", Collections.emptyList());
         currencyDTO = new CurrencyDTO(UUID.randomUUID(),"United Arab Emirates Dirham", CurrencyEnumDTO.AED, Instant.now());
         newCurrencyDTO = new NewCurrencyDTO("United Arab Emirates Dirham", CurrencyEnumDTO.AED);
     }
@@ -80,7 +80,7 @@ public class CurrencyControllerTest {
         mockMvc.perform(get("/api/v1/currency")
                         .param("page", "0")
                         .param("size", "1")
-                        .param("sort", "name,asc")
+                        .param("sort", "name")
                         .param("searchQuery", "USD"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(200))

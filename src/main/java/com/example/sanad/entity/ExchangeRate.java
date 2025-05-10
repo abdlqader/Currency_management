@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "exchange_rates")
 @EqualsAndHashCode(callSuper = true)
 public class ExchangeRate extends AbstractEntity<ExchangeRate> {
@@ -20,8 +22,9 @@ public class ExchangeRate extends AbstractEntity<ExchangeRate> {
 
     // Represents the target currency to which the exchange rate is applied.
     // For example, this could be EUR if converting from USD to EUR.
-    @ManyToOne
-    private Currency targetCurrency;
+    @Column(name = "target_currency_code", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CurrencyEnum targetCurrencyCode;
 
     // The exchange rate between the source and target currencies.
     // This value represents how much 1 unit of the source currency is worth in the target currency.
