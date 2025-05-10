@@ -1,6 +1,7 @@
 package com.example.sanad.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "exchange_rates")
 @EqualsAndHashCode(callSuper = true)
 public class ExchangeRate extends AbstractEntity<ExchangeRate> {
