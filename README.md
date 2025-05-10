@@ -46,7 +46,7 @@ bash build-local.sh
 ## 🔐 Open Exchange Rates Integration
 The project is designed to **integrate** with the Open Exchange Rates API.
 
-You **must** place your **personal APP_ID** in the following file:
-**container/local/.env**
+You **must** place your **personal OPENEXCHANGERATES_APP_ID** in the following file:
+**container/local/.env** for open exchange rates integration to work.
 
 The .env file is already included in the repository to ease project setup.
