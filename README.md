@@ -1,6 +1,4 @@
-# Sanad Technical Task Project
-
-This is a technical task project developed for **Sanad**.
+# Currency management
 
 ## 🧠 Tech Choices
 
