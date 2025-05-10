@@ -6,6 +6,7 @@ import com.example.sanad.rest.dto.CurrencyEnumDTO;
 import com.example.sanad.rest.dto.CurrencyExchangeRateDTO;
 import com.example.sanad.rest.dto.NewCurrencyDTO;
 import com.example.sanad.rest.mapper.CurrencyMapper;
+import com.example.sanad.rest.util.BaseHttpResponse;
 import com.example.sanad.rest.util.BaseResponse;
 import com.example.sanad.rest.util.PaginatedResponse;
 import com.example.sanad.services.CurrencyService;
@@ -67,6 +68,14 @@ public class CurrencyController {
                 HttpStatus.CREATED,
                 "Currency added successfully",
                 currencyMapper.toDto(currencyService.addCurrency(currencyMapper.toEntity(currency)))
+        );
+    }
+    @PostMapping("fetch-exchange-rates")
+    public ResponseEntity<BaseHttpResponse> updateCurrenciesExchangeRate() {
+        currencyService.updateExchangeRates();
+        return buildResponseEntity(
+                HttpStatus.OK,
+                "Currencies exchange rates updated successfully"
         );
     }
 }
