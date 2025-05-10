@@ -30,5 +30,10 @@ public class httpUtil {
         pagination.setTotalPages(Optional.of(page.getTotalPages()));
         return pagination;
     }
-
+    public static ResponseEntity<BaseHttpResponse> buildResponseEntity(HttpStatus status, String message) {
+        BaseHttpResponse response = new BaseHttpResponse();
+        response.setMessage(message);
+        response.setStatus(status.value());
+        return ResponseEntity.status(status).body(response);
+    }
 }

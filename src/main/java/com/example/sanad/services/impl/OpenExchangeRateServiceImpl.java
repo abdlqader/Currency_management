@@ -50,7 +50,7 @@ public class OpenExchangeRateServiceImpl implements com.example.sanad.services.O
             // Step 6: Convert USD-based rate to baseCurrency-based rate.
             // Formula: (USD → currency) / (USD → baseCurrency) = baseCurrency → currency
             // Example: EUR / AED = how many EUR per 1 AED
-            BigDecimal targetBaseToCurrencyRate = usdToCurrencyRate.divide(targetBaseRate, 10, RoundingMode.HALF_UP);
+            BigDecimal targetBaseToCurrencyRate = getTargetRate(usdToCurrencyRate, targetBaseRate);
 
             // Step 7: Create and store a new ExchangeRate object.
             exchangeRates.add(new ExchangeRate(
@@ -62,5 +62,37 @@ public class OpenExchangeRateServiceImpl implements com.example.sanad.services.O
 
         // Step 8: Return the full list of exchange rates relative to the base currency.
         return exchangeRates;
+    }
+    @Override
+    public void updateRates(Currency baseCurrency) {
+        // Step 1: Fetch latest exchange rates from Open Exchange Rates API.
+        // Rates are in terms of USD (i.e., USD → currency).
+        Map<String, BigDecimal> usdRates = openExchangeRatesClient.getLatestRates(appId).rates();
+
+        // Step 2: Get the rate of the base currency in terms of USD.
+        // This is used as the divisor to convert all other currencies to baseCurrency equivalents.
+        BigDecimal targetBaseRate = usdRates.get(baseCurrency.getCode().name());
+
+        // Step 3: Validate the target base rate.
+        // If the rate is missing or zero, we cannot convert accurately, so we throw an exception.
+        if (targetBaseRate == null || targetBaseRate.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Invalid or missing rate for base currency: " + baseCurrency);
+        }
+        // Step 4: Loop through each USD-based rate in the response.
+        for (ExchangeRate rate : baseCurrency.getExchangeRates()) {
+            String currencyCode = rate.getTargetCurrencyCode().toString(); // Example: "EUR"
+            BigDecimal usdToCurrencyRate = usdRates.get(currencyCode); // Example: 0.91
+
+            // Step 5: Convert USD-based rate to baseCurrency-based rate.
+            // Formula: (USD → currency) / (USD → baseCurrency) = baseCurrency → currency
+            // Example: EUR / AED = how many EUR per 1 AED
+            BigDecimal targetBaseToCurrencyRate = getTargetRate(usdToCurrencyRate, targetBaseRate);
+
+            // Step 6: Create and store a new ExchangeRate object.
+            rate.setRate(targetBaseToCurrencyRate);
+        }
+    }
+    private BigDecimal getTargetRate(BigDecimal usdToCurrencyRate, BigDecimal targetBaseRate){
+        return usdToCurrencyRate.divide(targetBaseRate, 10, RoundingMode.HALF_UP);
     }
 }

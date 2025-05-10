@@ -13,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +91,27 @@ public class CurrencyServicesImpl implements CurrencyService {
         currencyRedisRepository.save(currencyMapper.toRedis(savedCurrency));
 
         return savedCurrency;
+    }
+
+    @Override
+    public void updateExchangeRates() {
+        logger.info("Updating exchange rates for all currencies");
+        List<Currency> currencies = currencyRepository.findAll(); //in case of large currencies count, this should be handled in batches
+        for (Currency currency : currencies) {
+            logger.info("Updating exchange rates for currency: {}", currency.getCode());
+            openExchangeRateServiceImpl.updateRates(currency);
+
+            // Save updated currency to DB
+            currencyRepository.save(currency);
+            // Update Redis
+            currencyRedisRepository.save(currencyMapper.toRedis(currency));
+        }
+    }
+    // This runs every hour on the hour (e.g., 1:00, 2:00, 3:00...)
+    @Scheduled(cron = "0 0 * * * *")
+    public void runEveryHour() {
+        logger.info("Running hourly task at: " + java.time.LocalDateTime.now());
+        updateExchangeRates();
     }
 
     private Specification<Currency> withSearchQuery(String searchQuery) {

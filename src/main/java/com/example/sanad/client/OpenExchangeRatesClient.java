@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface OpenExchangeRatesClient {
 
     @GetMapping("/latest.json")
-    ExchangeRatesResponse getLatestRates(@RequestParam("app_id") String appId);
+    ExchangeRatesResponse getLatestRates(@RequestParam("app_id") String appId); //this should be cached since its the same response everytime.
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface OpenExchangeRateService {
     List<ExchangeRate> getExchangeRates(Currency baseCurrency);
+    void updateRates(Currency baseCurrency);
 }
