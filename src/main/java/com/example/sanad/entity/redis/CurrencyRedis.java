@@ -1,19 +1,16 @@
 package com.example.sanad.entity.redis;
 
 import com.example.sanad.entity.CurrencyEnum;
-import com.example.sanad.entity.ExchangeRate;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.List;
 import java.util.UUID;
+
 @RedisHash("currencies_redis")
 @Data
 public class CurrencyRedis {
-
     private UUID id;
     // The unique code of the currency, represented by a CurrencyEnum.
     // This code is used to identify the currency (e.g., USD for US Dollar, EUR for Euro).
@@ -27,9 +24,9 @@ public class CurrencyRedis {
     // List of ExchangeRate entities where this currency is the source currency.
     // This represents all exchange rates where this currency is being converted into another currency.
     // For example, if the sourceCurrency is USD, it would list exchange rates for USD to EUR, USD to GBP, etc.
-    private List<ExchangeRate> exchangeRates;
+    private List<ExchangeRateRedis> exchangeRates;
     @Override
     public String toString() {
-        return "Currency{" + "id=" + id +", code='" + code + "}";
+        return "Currency{" + "code='" + code + "}";
     }
 }
