@@ -24,13 +24,13 @@ public class CurrencyServicesImpl implements CurrencyService {
     private final CurrencyRedisRepository currencyRedisRepository;
     private final CurrencyRepository currencyRepository;
     private final CurrencyMapper currencyMapper;
-    private final OpenExchangeRateService openExchangeRateService;
+    private final OpenExchangeRateServiceImpl openExchangeRateServiceImpl;
 
-    public CurrencyServicesImpl(CurrencyRedisRepository currencyRedisRepository, CurrencyRepository currencyRepository, CurrencyMapper currencyMapper, OpenExchangeRateService openExchangeRateService) {
+    public CurrencyServicesImpl(CurrencyRedisRepository currencyRedisRepository, CurrencyRepository currencyRepository, CurrencyMapper currencyMapper, OpenExchangeRateServiceImpl openExchangeRateServiceImpl) {
         this.currencyRedisRepository = currencyRedisRepository;
         this.currencyRepository = currencyRepository;
         this.currencyMapper = currencyMapper;
-        this.openExchangeRateService = openExchangeRateService;
+        this.openExchangeRateServiceImpl = openExchangeRateServiceImpl;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class CurrencyServicesImpl implements CurrencyService {
 
         // Fetch exchange rates from OpenExchangeRateService
         logger.info("Fetching exchange rates for currency: {}", currency.getCode());
-        List<ExchangeRate> exchangeRates = openExchangeRateService.getExchangeRates(currency);
+        List<ExchangeRate> exchangeRates = openExchangeRateServiceImpl.getExchangeRates(currency);
         currency.setExchangeRates(exchangeRates);
 
         // Save to DB

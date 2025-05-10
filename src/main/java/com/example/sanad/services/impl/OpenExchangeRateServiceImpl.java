@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class OpenExchangeRateService implements com.example.sanad.services.OpenExchangeRateService {
+public class OpenExchangeRateServiceImpl implements com.example.sanad.services.OpenExchangeRateService {
     private final OpenExchangeRatesClient openExchangeRatesClient;
     private final String appId;
 
-    public OpenExchangeRateService(OpenExchangeRatesClient openExchangeRatesClient, @Value("${openexchangerates.app-id}") String appId) {
+    public OpenExchangeRateServiceImpl(OpenExchangeRatesClient openExchangeRatesClient, @Value("${openexchangerates.app-id}") String appId) {
         this.openExchangeRatesClient = openExchangeRatesClient;
         this.appId = appId;
     }
