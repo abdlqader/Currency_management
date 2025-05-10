@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### ignore env files ###
+container/**/*.env
+
+### ignore postgres data ###
+container/**/postgres_data
+
+### ignore redis data   ###
+container/**/redis_data
