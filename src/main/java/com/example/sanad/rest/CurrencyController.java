@@ -2,6 +2,7 @@ package com.example.sanad.rest;
 
 import com.example.sanad.entity.Currency;
 import com.example.sanad.rest.dto.CurrencyDTO;
+import com.example.sanad.rest.dto.CurrencyEnumDTO;
 import com.example.sanad.rest.dto.CurrencyExchangeRateDTO;
 import com.example.sanad.rest.dto.NewCurrencyDTO;
 import com.example.sanad.rest.mapper.CurrencyMapper;
@@ -51,11 +52,11 @@ public class CurrencyController {
 
     // Get exchange rates for a currency
     @GetMapping("/{currencyCode}/exchange-rates")
-    public ResponseEntity<BaseResponse<CurrencyExchangeRateDTO>> getExchangeRates(@PathVariable String currencyCode) {
+    public ResponseEntity<BaseResponse<CurrencyExchangeRateDTO>> getExchangeRates(@PathVariable CurrencyEnumDTO currencyCode) {
         return buildResponseEntity(
                 HttpStatus.OK,
                 "Exchange rates retrieved successfully",
-                currencyMapper.toExchangeRateDto(currencyService.getCurrencyByCode(currencyCode))
+                currencyMapper.toExchangeRateDto(currencyService.getCurrencyByCode(currencyCode.toString()))
         );
     }
 
